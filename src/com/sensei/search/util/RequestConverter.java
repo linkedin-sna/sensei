@@ -17,11 +17,17 @@ public class RequestConverter {
 		breq.setCount(req.getCount());
 		breq.setSort(req.getSort());
 		breq.setFetchStoredFields(req.isFetchStoredFields());
+		breq.setShowExplanation(req.isShowExplanation());
 		
 		SenseiQueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(req.getQuery());
        
         // query
-        Query q = queryBuilder.buildQuery();
+        Query q = null;
+        
+        if (queryBuilder!=null){
+        	q = queryBuilder.buildQuery();
+        }
+        
         if(q != null){
             breq.setQuery(q);
         }

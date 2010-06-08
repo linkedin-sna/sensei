@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.SortField;
 
 import com.browseengine.bobo.api.BrowseFacet;
@@ -115,8 +115,12 @@ public class SenseiRequestBPOConverter {
 		List<SenseiRequestBPO.FacetHandlerInitializerParam> paramList = new ArrayList<SenseiRequestBPO.FacetHandlerInitializerParam>(paramMap.size());
 		Set<Entry<String,FacetHandlerInitializerParam>> entrySet = paramMap.entrySet();
 		for (Entry<String,FacetHandlerInitializerParam> entry : entrySet){
+			
 		  String name = entry.getKey();
 		  FacetHandlerInitializerParam param = entry.getValue();
+		  
+		  if (param==null) continue;
+		  
 		  SenseiRequestBPO.FacetHandlerInitializerParam.Builder subBuilder = SenseiRequestBPO.FacetHandlerInitializerParam.newBuilder();
 		  subBuilder.setName(name);
 		  
@@ -202,7 +206,7 @@ public class SenseiRequestBPOConverter {
 						BrowseFacet bfacet = new BrowseFacet();
 						String val = facet.getVal();
 						bfacet.setValue(val);
-						bfacet.setHitCount(facet.getCount());
+						bfacet.setFacetValueHitCount(facet.getCount());
 						_data.put(val,bfacet);
 					}
 				}
@@ -230,6 +234,49 @@ public class SenseiRequestBPOConverter {
 		}
 	}
 	
+	private static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation convert(Explanation explain){
+		if (explain!=null){
+          com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder explBlder = com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.newBuilder();
+          explBlder.setDescription(explain.getDescription());
+          explBlder.setValue(explain.getValue());
+          Explanation[] subExpls = explain.getDetails();
+          if (subExpls!=null && subExpls.length>0){
+        	  for (Explanation subExpl : subExpls){
+        		  com.sensei.search.req.protobuf.SenseiResultBPO.Explanation sub = convert(subExpl);
+        		  if (sub!=null){
+        		    explBlder.addDetails(sub);
+        		  }
+        	  }
+          }
+          return explBlder.build();
+        }
+		else{
+			return null;
+		}
+	}
+	
+
+	private static  Explanation convert(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation explain){
+		if (explain!=null){
+		    Explanation expl = new Explanation();
+		    expl.setDescription(explain.getDescription());
+		    expl.setValue(explain.getValue());
+		    List<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation> detailList = explain.getDetailsList();
+		    if (detailList!=null){
+		    	for (com.sensei.search.req.protobuf.SenseiResultBPO.Explanation detail :detailList){
+		    		Explanation subExpl = convert(detail);
+		    		if (subExpl!=null){
+		    			expl.addDetail(subExpl);
+		    		}
+		    	}
+		    }
+		    return expl;
+		}
+		else{
+			return null;
+		}
+	}
+	
 	public static SenseiHit convert(SenseiResultBPO.Hit hit){
 		SenseiHit bhit = new SenseiHit();
         bhit.setUID(hit.getUid());
@@ -249,6 +296,7 @@ public class SenseiRequestBPOConverter {
 			}
 		}
 		bhit.setStoredFields( document );
+		bhit.setExplanation(convert(hit.getExplanation()));
 		return bhit;
 	}
 	
@@ -289,6 +337,7 @@ public class SenseiRequestBPOConverter {
 		}
 		breq.setOffset(req.getOffset());
 		breq.setCount(req.getCount());
+		breq.setShowExplanation(req.getShowExplanation());
 		
 		breq.setFetchStoredFields(req.getFetchStoredFields());
 		breq.setPartitions(ProtoConvertUtil.toIntegerSet(req.getPartitions()));
@@ -492,8 +541,15 @@ public class SenseiRequestBPOConverter {
 		Iterator<Entry<String,String[]>> iter = fieldMap.entrySet().iterator();
 		while(iter.hasNext()){
 			Entry<String,String[]> entry = iter.next();
-			SenseiResultBPO.FieldVal fieldVal = SenseiResultBPO.FieldVal.newBuilder().setName(entry.getKey()).addAllVals(Arrays.asList(entry.getValue())).build();
-			hitBuilder.addFieldValues(fieldVal);
+			String name = entry.getKey();
+			String[] vals = entry.getValue();
+			if (vals!=null){
+			  SenseiResultBPO.FieldVal fieldVal = SenseiResultBPO.FieldVal.newBuilder().setName(name).addAllVals(Arrays.asList(vals)).build();
+			  hitBuilder.addFieldValues(fieldVal);
+			}
+			else{
+			  logger.error("null values for: "+name+", not added");
+			}
 		}
 		if ( null != hit.getStoredFields() ) {
 			for( Object fieldObj : hit.getStoredFields().getFields() ) {
@@ -507,6 +563,13 @@ public class SenseiRequestBPOConverter {
 			}
 		}
         hitBuilder.setUid(hit.getUID());
+        
+        // explanation
+        Explanation explain = hit.getExplanation();
+        com.sensei.search.req.protobuf.SenseiResultBPO.Explanation exp = convert(explain);
+        if (exp!=null){
+          hitBuilder.setExplanation(exp);
+        }
 		return hitBuilder.build();
 	}
 	
@@ -515,7 +578,7 @@ public class SenseiRequestBPOConverter {
 		facetBuilder.setName(name);
 		List<BrowseFacet> list = facetAccessible.getFacets();
 		for (BrowseFacet facet : list){
-			SenseiResultBPO.Facet f = SenseiResultBPO.Facet.newBuilder().setVal(facet.getValue()).setCount(facet.getHitCount()).build();
+			SenseiResultBPO.Facet f = SenseiResultBPO.Facet.newBuilder().setVal(facet.getValue()).setCount(facet.getFacetValueHitCount()).build();
 			facetBuilder.addFacets(f);
 		}
 		return facetBuilder.build();

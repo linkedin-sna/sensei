@@ -1379,6 +1379,402 @@ public final class SenseiResultBPO {
     }
   }
   
+  public static final class Explanation extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Explanation.newBuilder() to construct.
+    private Explanation() {}
+    
+    private static final Explanation defaultInstance = new Explanation();
+    public static Explanation getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Explanation getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sensei.search.req.protobuf.SenseiResultBPO.internal_static_com_sensei_search_req_protobuf_Explanation_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sensei.search.req.protobuf.SenseiResultBPO.internal_static_com_sensei_search_req_protobuf_Explanation_fieldAccessorTable;
+    }
+    
+    // optional float value = 1;
+    public static final int VALUE_FIELD_NUMBER = 1;
+    private boolean hasValue;
+    private float value_ = 0F;
+    public boolean hasValue() { return hasValue; }
+    public float getValue() { return value_; }
+    
+    // optional string description = 2;
+    public static final int DESCRIPTION_FIELD_NUMBER = 2;
+    private boolean hasDescription;
+    private java.lang.String description_ = "";
+    public boolean hasDescription() { return hasDescription; }
+    public java.lang.String getDescription() { return description_; }
+    
+    // repeated .com.sensei.search.req.protobuf.Explanation details = 3;
+    public static final int DETAILS_FIELD_NUMBER = 3;
+    private java.util.List<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation> details_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation> getDetailsList() {
+      return details_;
+    }
+    public int getDetailsCount() { return details_.size(); }
+    public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation getDetails(int index) {
+      return details_.get(index);
+    }
+    
+    @Override
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasValue()) {
+        output.writeFloat(1, getValue());
+      }
+      if (hasDescription()) {
+        output.writeString(2, getDescription());
+      }
+      for (com.sensei.search.req.protobuf.SenseiResultBPO.Explanation element : getDetailsList()) {
+        output.writeMessage(3, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(1, getValue());
+      }
+      if (hasDescription()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getDescription());
+      }
+      for (com.sensei.search.req.protobuf.SenseiResultBPO.Explanation element : getDetailsList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.sensei.search.req.protobuf.SenseiResultBPO.Explanation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.newBuilder()
+      private Builder() {}
+      
+      com.sensei.search.req.protobuf.SenseiResultBPO.Explanation result = new com.sensei.search.req.protobuf.SenseiResultBPO.Explanation();
+      
+      @Override
+      protected com.sensei.search.req.protobuf.SenseiResultBPO.Explanation internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.sensei.search.req.protobuf.SenseiResultBPO.Explanation();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDescriptor();
+      }
+      
+      public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation getDefaultInstanceForType() {
+        return com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDefaultInstance();
+      }
+      
+      public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.sensei.search.req.protobuf.SenseiResultBPO.Explanation buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        if (result.details_ != java.util.Collections.EMPTY_LIST) {
+          result.details_ =
+            java.util.Collections.unmodifiableList(result.details_);
+        }
+        com.sensei.search.req.protobuf.SenseiResultBPO.Explanation returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sensei.search.req.protobuf.SenseiResultBPO.Explanation) {
+          return mergeFrom((com.sensei.search.req.protobuf.SenseiResultBPO.Explanation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation other) {
+        if (other == com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDefaultInstance()) return this;
+        if (other.hasValue()) {
+          setValue(other.getValue());
+        }
+        if (other.hasDescription()) {
+          setDescription(other.getDescription());
+        }
+        if (!other.details_.isEmpty()) {
+          if (result.details_.isEmpty()) {
+            result.details_ = new java.util.ArrayList<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation>();
+          }
+          result.details_.addAll(other.details_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 13: {
+              setValue(input.readFloat());
+              break;
+            }
+            case 18: {
+              setDescription(input.readString());
+              break;
+            }
+            case 26: {
+              com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder subBuilder = com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addDetails(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional float value = 1;
+      public boolean hasValue() {
+        return result.hasValue();
+      }
+      public float getValue() {
+        return result.getValue();
+      }
+      public Builder setValue(float value) {
+        result.hasValue = true;
+        result.value_ = value;
+        return this;
+      }
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = 0F;
+        return this;
+      }
+      
+      // optional string description = 2;
+      public boolean hasDescription() {
+        return result.hasDescription();
+      }
+      public java.lang.String getDescription() {
+        return result.getDescription();
+      }
+      public Builder setDescription(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasDescription = true;
+        result.description_ = value;
+        return this;
+      }
+      public Builder clearDescription() {
+        result.hasDescription = false;
+        result.description_ = "";
+        return this;
+      }
+      
+      // repeated .com.sensei.search.req.protobuf.Explanation details = 3;
+      public java.util.List<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation> getDetailsList() {
+        return java.util.Collections.unmodifiableList(result.details_);
+      }
+      public int getDetailsCount() {
+        return result.getDetailsCount();
+      }
+      public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation getDetails(int index) {
+        return result.getDetails(index);
+      }
+      public Builder setDetails(int index, com.sensei.search.req.protobuf.SenseiResultBPO.Explanation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.details_.set(index, value);
+        return this;
+      }
+      public Builder setDetails(int index, com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder builderForValue) {
+        result.details_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addDetails(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.details_.isEmpty()) {
+          result.details_ = new java.util.ArrayList<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation>();
+        }
+        result.details_.add(value);
+        return this;
+      }
+      public Builder addDetails(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder builderForValue) {
+        if (result.details_.isEmpty()) {
+          result.details_ = new java.util.ArrayList<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation>();
+        }
+        result.details_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllDetails(
+          java.lang.Iterable<? extends com.sensei.search.req.protobuf.SenseiResultBPO.Explanation> values) {
+        if (result.details_.isEmpty()) {
+          result.details_ = new java.util.ArrayList<com.sensei.search.req.protobuf.SenseiResultBPO.Explanation>();
+        }
+        super.addAll(values, result.details_);
+        return this;
+      }
+      public Builder clearDetails() {
+        result.details_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      com.sensei.search.req.protobuf.SenseiResultBPO.getDescriptor();
+    }
+  }
+  
   public static final class Hit extends
       com.google.protobuf.GeneratedMessage {
     // Use Hit.newBuilder() to construct.
@@ -1449,6 +1845,13 @@ public final class SenseiResultBPO {
       return storedFields_.get(index);
     }
     
+    // optional .com.sensei.search.req.protobuf.Explanation explanation = 6;
+    public static final int EXPLANATION_FIELD_NUMBER = 6;
+    private boolean hasExplanation;
+    private com.sensei.search.req.protobuf.SenseiResultBPO.Explanation explanation_ = com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDefaultInstance();
+    public boolean hasExplanation() { return hasExplanation; }
+    public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation getExplanation() { return explanation_; }
+    
     @Override
     public final boolean isInitialized() {
       if (!hasUid) return false;
@@ -1479,6 +1882,9 @@ public final class SenseiResultBPO {
       for (com.sensei.search.req.protobuf.SenseiResultBPO.StoredField element : getStoredFieldsList()) {
         output.writeMessage(5, element);
       }
+      if (hasExplanation()) {
+        output.writeMessage(6, getExplanation());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -1508,6 +1914,10 @@ public final class SenseiResultBPO {
       for (com.sensei.search.req.protobuf.SenseiResultBPO.StoredField element : getStoredFieldsList()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, element);
+      }
+      if (hasExplanation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getExplanation());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1679,6 +2089,9 @@ public final class SenseiResultBPO {
           }
           result.storedFields_.addAll(other.storedFields_);
         }
+        if (other.hasExplanation()) {
+          mergeExplanation(other.getExplanation());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1735,6 +2148,15 @@ public final class SenseiResultBPO {
               com.sensei.search.req.protobuf.SenseiResultBPO.StoredField.Builder subBuilder = com.sensei.search.req.protobuf.SenseiResultBPO.StoredField.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addStoredFields(subBuilder.buildPartial());
+              break;
+            }
+            case 50: {
+              com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder subBuilder = com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.newBuilder();
+              if (hasExplanation()) {
+                subBuilder.mergeFrom(getExplanation());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setExplanation(subBuilder.buildPartial());
               break;
             }
           }
@@ -1895,6 +2317,43 @@ public final class SenseiResultBPO {
       }
       public Builder clearStoredFields() {
         result.storedFields_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .com.sensei.search.req.protobuf.Explanation explanation = 6;
+      public boolean hasExplanation() {
+        return result.hasExplanation();
+      }
+      public com.sensei.search.req.protobuf.SenseiResultBPO.Explanation getExplanation() {
+        return result.getExplanation();
+      }
+      public Builder setExplanation(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasExplanation = true;
+        result.explanation_ = value;
+        return this;
+      }
+      public Builder setExplanation(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder builderForValue) {
+        result.hasExplanation = true;
+        result.explanation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeExplanation(com.sensei.search.req.protobuf.SenseiResultBPO.Explanation value) {
+        if (result.hasExplanation() &&
+            result.explanation_ != com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDefaultInstance()) {
+          result.explanation_ =
+            com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.newBuilder(result.explanation_).mergeFrom(value).buildPartial();
+        } else {
+          result.explanation_ = value;
+        }
+        result.hasExplanation = true;
+        return this;
+      }
+      public Builder clearExplanation() {
+        result.hasExplanation = false;
+        result.explanation_ = com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.getDefaultInstance();
         return this;
       }
     }
@@ -2489,6 +2948,11 @@ public final class SenseiResultBPO {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_sensei_search_req_protobuf_StoredField_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sensei_search_req_protobuf_Explanation_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_sensei_search_req_protobuf_Explanation_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sensei_search_req_protobuf_Hit_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -2513,18 +2977,23 @@ public final class SenseiResultBPO {
       "me\030\001 \002(\t\0225\n\006facets\030\002 \003(\0132%.com.sensei.se" +
       "arch.req.protobuf.Facet\"&\n\010FieldVal\022\014\n\004n" +
       "ame\030\001 \002(\t\022\014\n\004vals\030\002 \003(\t\")\n\013StoredField\022\014" +
-      "\n\004name\030\001 \002(\t\022\014\n\004vals\030\002 \003(\t\"\262\001\n\003Hit\022\r\n\005do" +
-      "cid\030\001 \001(\r\022\r\n\005score\030\002 \001(\002\022=\n\013fieldValues\030" +
-      "\003 \003(\0132(.com.sensei.search.req.protobuf.F" +
-      "ieldVal\022\013\n\003uid\030\004 \002(\003\022A\n\014storedFields\030\005 \003" +
-      "(\0132+.com.sensei.search.req.protobuf.Stor" +
-      "edField\"\307\001\n\006Result\022\017\n\007numhits\030\001 \001(\r\022\021\n\tt" +
-      "otaldocs\030\002 \001(\r\022G\n\017facetContainers\030\003 \003(\0132" +
-      "..com.sensei.search.req.protobuf.FacetCo" +
-      "ntainer\0221\n\004hits\030\004 \003(\0132#.com.sensei.searc" +
-      "h.req.protobuf.Hit\022\014\n\004time\030\005 \001(\004\022\017\n\003tid\030" +
-      "\006 \002(\003:\002-1B3\n\036com.sensei.search.req.proto" +
-      "bufB\017SenseiResultBPOH\001";
+      "\n\004name\030\001 \002(\t\022\014\n\004vals\030\002 \003(\t\"o\n\013Explanatio" +
+      "n\022\r\n\005value\030\001 \001(\002\022\023\n\013description\030\002 \001(\t\022<\n" +
+      "\007details\030\003 \003(\0132+.com.sensei.search.req.p" +
+      "rotobuf.Explanation\"\364\001\n\003Hit\022\r\n\005docid\030\001 \001" +
+      "(\r\022\r\n\005score\030\002 \001(\002\022=\n\013fieldValues\030\003 \003(\0132(" +
+      ".com.sensei.search.req.protobuf.FieldVal" +
+      "\022\013\n\003uid\030\004 \002(\003\022A\n\014storedFields\030\005 \003(\0132+.co" +
+      "m.sensei.search.req.protobuf.StoredField" +
+      "\022@\n\013explanation\030\006 \001(\0132+.com.sensei.searc" +
+      "h.req.protobuf.Explanation\"\307\001\n\006Result\022\017\n" +
+      "\007numhits\030\001 \001(\r\022\021\n\ttotaldocs\030\002 \001(\r\022G\n\017fac" +
+      "etContainers\030\003 \003(\0132..com.sensei.search.r" +
+      "eq.protobuf.FacetContainer\0221\n\004hits\030\004 \003(\013" +
+      "2#.com.sensei.search.req.protobuf.Hit\022\014\n" +
+      "\004time\030\005 \001(\004\022\017\n\003tid\030\006 \002(\003:\002-1B3\n\036com.sens" +
+      "ei.search.req.protobufB\017SenseiResultBPOH" +
+      "\001";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -2562,16 +3031,24 @@ public final class SenseiResultBPO {
               new java.lang.String[] { "Name", "Vals", },
               com.sensei.search.req.protobuf.SenseiResultBPO.StoredField.class,
               com.sensei.search.req.protobuf.SenseiResultBPO.StoredField.Builder.class);
-          internal_static_com_sensei_search_req_protobuf_Hit_descriptor =
+          internal_static_com_sensei_search_req_protobuf_Explanation_descriptor =
             getDescriptor().getMessageTypes().get(4);
+          internal_static_com_sensei_search_req_protobuf_Explanation_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_sensei_search_req_protobuf_Explanation_descriptor,
+              new java.lang.String[] { "Value", "Description", "Details", },
+              com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.class,
+              com.sensei.search.req.protobuf.SenseiResultBPO.Explanation.Builder.class);
+          internal_static_com_sensei_search_req_protobuf_Hit_descriptor =
+            getDescriptor().getMessageTypes().get(5);
           internal_static_com_sensei_search_req_protobuf_Hit_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_sensei_search_req_protobuf_Hit_descriptor,
-              new java.lang.String[] { "Docid", "Score", "FieldValues", "Uid", "StoredFields", },
+              new java.lang.String[] { "Docid", "Score", "FieldValues", "Uid", "StoredFields", "Explanation", },
               com.sensei.search.req.protobuf.SenseiResultBPO.Hit.class,
               com.sensei.search.req.protobuf.SenseiResultBPO.Hit.Builder.class);
           internal_static_com_sensei_search_req_protobuf_Result_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+            getDescriptor().getMessageTypes().get(6);
           internal_static_com_sensei_search_req_protobuf_Result_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_sensei_search_req_protobuf_Result_descriptor,

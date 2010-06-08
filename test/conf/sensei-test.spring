@@ -12,7 +12,6 @@
 	</bean>
 
 	<bean id="query-parser" class="org.apache.lucene.queryParser.QueryParser">
-	   <constructor-arg ref="lucene-version"/>
 	   <constructor-arg value="contents" />
 	   <constructor-arg ref="analyzer" />
 	</bean>

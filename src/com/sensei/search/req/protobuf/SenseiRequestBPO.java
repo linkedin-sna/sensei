@@ -3363,6 +3363,13 @@ public final class SenseiRequestBPO {
     public boolean hasTid() { return hasTid; }
     public long getTid() { return tid_; }
     
+    // optional bool showExplanation = 11;
+    public static final int SHOWEXPLANATION_FIELD_NUMBER = 11;
+    private boolean hasShowExplanation;
+    private boolean showExplanation_ = false;
+    public boolean hasShowExplanation() { return hasShowExplanation; }
+    public boolean getShowExplanation() { return showExplanation_; }
+    
     @Override
     public final boolean isInitialized() {
       if (!hasTid) return false;
@@ -3410,6 +3417,9 @@ public final class SenseiRequestBPO {
       }
       if (hasTid()) {
         output.writeInt64(10, getTid());
+      }
+      if (hasShowExplanation()) {
+        output.writeBool(11, getShowExplanation());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3460,6 +3470,10 @@ public final class SenseiRequestBPO {
       if (hasTid()) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(10, getTid());
+      }
+      if (hasShowExplanation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(11, getShowExplanation());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3660,6 +3674,9 @@ public final class SenseiRequestBPO {
         if (other.hasTid()) {
           setTid(other.getTid());
         }
+        if (other.hasShowExplanation()) {
+          setShowExplanation(other.getShowExplanation());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -3740,6 +3757,10 @@ public final class SenseiRequestBPO {
             }
             case 80: {
               setTid(input.readInt64());
+              break;
+            }
+            case 88: {
+              setShowExplanation(input.readBool());
               break;
             }
           }
@@ -4064,6 +4085,24 @@ public final class SenseiRequestBPO {
         result.tid_ = -1L;
         return this;
       }
+      
+      // optional bool showExplanation = 11;
+      public boolean hasShowExplanation() {
+        return result.hasShowExplanation();
+      }
+      public boolean getShowExplanation() {
+        return result.getShowExplanation();
+      }
+      public Builder setShowExplanation(boolean value) {
+        result.hasShowExplanation = true;
+        result.showExplanation_ = value;
+        return this;
+      }
+      public Builder clearShowExplanation() {
+        result.hasShowExplanation = false;
+        result.showExplanation_ = false;
+        return this;
+      }
     }
     
     static {
@@ -4147,7 +4186,7 @@ public final class SenseiRequestBPO {
       "xpand\030\003 \001(\010\022\020\n\010minCount\030\004 \001(\r\022M\n\007orderBy" +
       "\030\005 \001(\01622.com.sensei.search.req.protobuf." +
       "FacetSpec.SortSpec:\010HitsDesc\"&\n\010SortSpec" +
-      "\022\014\n\010ValueAsc\020\000\022\014\n\010HitsDesc\020\001\"\200\003\n\007Request" +
+      "\022\014\n\010ValueAsc\020\000\022\014\n\010HitsDesc\020\001\"\231\003\n\007Request" +
       "\022=\n\nselections\030\001 \003(\0132).com.sensei.search" +
       ".req.protobuf.Selection\022\016\n\006offset\030\002 \001(\r\022" +
       "\r\n\005count\030\003 \001(\r\0222\n\004sort\030\004 \003(\0132$.com.sense" +
@@ -4157,8 +4196,9 @@ public final class SenseiRequestBPO {
       "ields\030\007 \001(\010\022U\n\017facetInitParams\030\010 \003(\0132<.c" +
       "om.sensei.search.req.protobuf.FacetHandl" +
       "erInitializerParam\022\022\n\npartitions\030\t \001(\014\022\017" +
-      "\n\003tid\030\n \002(\003:\002-1B4\n\036com.sensei.search.req" +
-      ".protobufB\020SenseiRequestBPOH\001";
+      "\n\003tid\030\n \002(\003:\002-1\022\027\n\017showExplanation\030\013 \001(\010" +
+      "B4\n\036com.sensei.search.req.protobufB\020Sens" +
+      "eiRequestBPOH\001";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -4225,7 +4265,7 @@ public final class SenseiRequestBPO {
           internal_static_com_sensei_search_req_protobuf_Request_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_sensei_search_req_protobuf_Request_descriptor,
-              new java.lang.String[] { "Selections", "Offset", "Count", "Sort", "FacetSpecs", "Query", "FetchStoredFields", "FacetInitParams", "Partitions", "Tid", },
+              new java.lang.String[] { "Selections", "Offset", "Count", "Sort", "FacetSpecs", "Query", "FetchStoredFields", "FacetInitParams", "Partitions", "Tid", "ShowExplanation", },
               com.sensei.search.req.protobuf.SenseiRequestBPO.Request.class,
               com.sensei.search.req.protobuf.SenseiRequestBPO.Request.Builder.class);
           return null;

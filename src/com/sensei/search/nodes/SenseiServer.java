@@ -7,8 +7,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.StandardMBean;
@@ -48,6 +51,9 @@ public class SenseiServer {
     private SenseiNode _node;
     private final HashSet<ZoieSystem<BoboIndexReader,?>> zoieSystems = new HashSet<ZoieSystem<BoboIndexReader,?>>();
     private final HashSet<SenseiIndexLoader> indexLoaders = new HashSet<SenseiIndexLoader>();
+    private final MBeanServer mbeanServer = java.lang.management.ManagementFactory.getPlatformMBeanServer();
+    
+    private final List<ObjectName> _registeredMBeans;
 	
     
     public SenseiServer(int id, int port, int[] partitions,
@@ -67,6 +73,7 @@ public class SenseiServer {
                         SenseiIndexLoaderFactory indexLoaderFactory,
                         SenseiQueryBuilderFactory queryBuilderFactory)
     {
+      _registeredMBeans = new LinkedList<ObjectName>();
       if (extDir!=null){
         loadJars(extDir);
       }
@@ -126,6 +133,18 @@ public class SenseiServer {
 	}
 	
 	public void shutdown(){
+		logger.info("unregistering mbeans...");
+		try{
+			if (_registeredMBeans.size()>0){
+				for (ObjectName name : _registeredMBeans){
+				  mbeanServer.unregisterMBean(name);
+				}
+				_registeredMBeans.clear();
+			}
+		}
+		catch(Exception e){
+			logger.error(e.getMessage(),e);
+		}
 		try {
 			_node.shutdown();
 		} catch (Exception e) {
@@ -156,8 +175,6 @@ public class SenseiServer {
         
 		Map<Integer,IndexReaderFactory<ZoieIndexReader<BoboIndexReader>>> readerFactoryMap = 
 				new HashMap<Integer,IndexReaderFactory<ZoieIndexReader<BoboIndexReader>>>();
-		
-        MBeanServer mbeanServer = java.lang.management.ManagementFactory.getPlatformMBeanServer();
         
 //        ClusterClient clusterClient = ClusterClientFactory.newInstance().newZookeeperClient();
         String clusterName = _clusterClient.getServiceName();
@@ -172,11 +189,31 @@ public class SenseiServer {
 		  ZoieSystem<BoboIndexReader,?> zoieSystem = _zoieSystemFactory.getZoieSystem(part);
 		  
 		  // register ZoieSystemAdminMBean
-		  mbeanServer.registerMBean(new StandardMBean(zoieSystem.getAdminMBean(), ZoieSystemAdminMBean.class),
-		                            new ObjectName(clusterName, "name", "zoie-system-" + part));
+
+		  ObjectName name = new ObjectName(clusterName, "name", "zoie-system-" + part);
+		  try{
+		    mbeanServer.registerMBean(new StandardMBean(zoieSystem.getAdminMBean(), ZoieSystemAdminMBean.class),name);
+		    _registeredMBeans.add(name);
+		  }
+		  catch(Exception e){
+			  logger.error(e.getMessage(),e);
+			  if (e instanceof InstanceAlreadyExistsException){
+				  _registeredMBeans.add(name);
+			  }
+		  }
+		  
 		  // register ZoieIndexingStatusAdminMBean
-		  mbeanServer.registerMBean(new StandardMBean(new ZoieIndexingStatusAdmin(zoieSystem), ZoieIndexingStatusAdminMBean.class),
-		                            new ObjectName(clusterName, "name", "zoie-indexing-status-" + part));
+		  name = new ObjectName(clusterName, "name", "zoie-indexing-status-" + part);
+		  try{
+		    mbeanServer.registerMBean(new StandardMBean(new ZoieIndexingStatusAdmin(zoieSystem), ZoieIndexingStatusAdminMBean.class),name);
+		    _registeredMBeans.add(name);
+		  }
+		  catch(Exception e){
+			  logger.error(e.getMessage(),e);
+			  if (e instanceof InstanceAlreadyExistsException){
+				  _registeredMBeans.add(name);
+			  }
+		  }
 	          	  
 		  
 		  if(!zoieSystems.contains(zoieSystem))
@@ -202,17 +239,19 @@ public class SenseiServer {
 		
 		_node = new SenseiNode(_networkServer, _clusterClient, _id, _port, msgHandler, _partitions);
 		_node.startup(available);
-		
-		SenseiServerAdminMBean mbean = getAdminMBean();
-		
-		mbeanServer.registerMBean(new StandardMBean(mbean, SenseiServerAdminMBean.class),
-                                  new ObjectName(clusterName, "name", "sensei-server"));
-		
-		Runtime.getRuntime().addShutdownHook(new Thread(){
-			public void run(){
-				shutdown();
-			}
-		});
+
+		ObjectName name = new ObjectName(clusterName, "name", "sensei-server");
+		try{
+		  SenseiServerAdminMBean mbean = getAdminMBean();
+		  mbeanServer.registerMBean(new StandardMBean(mbean, SenseiServerAdminMBean.class),name);
+		  _registeredMBeans.add(name);
+		}
+		catch(Exception e){
+			logger.error(e.getMessage(),e);
+			if (e instanceof InstanceAlreadyExistsException){
+			  _registeredMBeans.add(name);
+		    }
+		}
 	}
 	
 	private SenseiServerAdminMBean getAdminMBean()
@@ -297,13 +336,20 @@ public class SenseiServer {
       SenseiIndexLoaderFactory<?> indexLoaderFactory = (SenseiIndexLoaderFactory)springCtx.getBean("index-loader-factory");
       SenseiQueryBuilderFactory queryBuilderFactory = (SenseiQueryBuilderFactory)springCtx.getBean("query-builder-factory");
       
-	  SenseiServer server = new SenseiServer(id, port, partitions,
+	  final SenseiServer server = new SenseiServer(id, port, partitions,
 	                                         extDir,
 	                                         networkServer,
 	                                         clusterClient,
 	                                         zoieSystemFactory,
 	                                         indexLoaderFactory,
 	                                         queryBuilderFactory);
+	  
+	  Runtime.getRuntime().addShutdownHook(new Thread(){
+			public void run(){
+				server.shutdown();
+			}
+		});
+	  
 	  server.start(available);
 	}
 }
